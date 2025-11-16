@@ -1,0 +1,208 @@
+{
+  "Protocol": {
+    "state": false,
+    "key": 0,
+    "values": {
+      "Heypixel_WorldBug": "true",
+      "Heypixel_Skin": "true",
+      "Heypixel_Gameprofile": "true"
+    }
+  },
+  "KillAura": {
+    "state": false,
+    "key": 82,
+    "values": {
+      "MaxCPS": "14.0",
+      "MinCPS": "12.0",
+      "Range": "3.3",
+      "ThroughWallsRange": "0.1",
+      "RotationRange": "3.25",
+      "SwingRange": "3.25",
+      "AttackMode": "Switch",
+      "RotationMode": "silent",
+      "MoveMode": "Silent",
+      "SwitchDelay": "150.0",
+      "KeepSprint": "true",
+      "Player": "true",
+      "Mob": "false"
+    }
+  },
+  "BackTrack": {
+    "state": true,
+    "key": 79,
+    "values": {
+      "Mode": "SlowSend",
+      "MaxRange": "6.0",
+      "MinRange": "4.6",
+      "Delay KB": "false"
+    }
+  },
+  "AutoProjecitle": {
+    "state": true,
+    "key": 0,
+    "values": {
+      "MaxRange": "8.0",
+      "MinRange": "1.0",
+      "Delay": "5.0"
+    }
+  },
+  "Velocity": {
+    "state": true,
+    "key": 73,
+    "values": {
+      "Mode": "Reduce",
+      "CPS": "2.0"
+    }
+  },
+  "Apple": {
+    "state": true,
+    "key": 0,
+    "values": {}
+  },
+  "TargetEsp": {
+    "state": true,
+    "key": 0,
+    "values": {
+      "Mode": "Nursultan",
+      "Only KillAura": "true",
+      "Range": "3.0"
+    }
+  },
+  "ESP": {
+    "state": true,
+    "key": 0,
+    "values": {
+      "Player": "true",
+      "PlayerMode": "HitBox",
+      "Item": "true"
+    }
+  },
+  "RealHealth": {
+    "state": true,
+    "key": 0,
+    "values": {}
+  },
+  "Teams": {
+    "state": true,
+    "key": 0,
+    "values": {
+      "Scoreboard": "true",
+      "Color": "false",
+      "ArmorColor": "false"
+    }
+  },
+  "NoWeb": {
+    "state": false,
+    "key": 0,
+    "values": {
+      "Mode": "GrimSlow"
+    }
+  },
+  "Sprint": {
+    "state": false,
+    "key": 0,
+    "values": {}
+  },
+  "Fly": {
+    "state": false,
+    "key": 74,
+    "values": {
+      "Mode": "LongJump",
+      "VanillaSpeed": "2.0",
+      "Explode": "true"
+    }
+  },
+  "ChestStealer": {
+    "state": false,
+    "key": 90,
+    "values": {
+      "MinDelay": "100.0",
+      "MaxDelay": "130.0",
+      "StealFromOtherContainers": "true"
+    }
+  },
+  "InvManager": {
+    "state": false,
+    "key": 90,
+    "values": {
+      "InvOpen": "true",
+      "Swing": "true",
+      "OffhandItem": "true",
+      "OffhandMode": "Projectile",
+      "Throw": "false",
+      "NoMove": "false",
+      "ItemDelay": "8.0",
+      "Blocks": "128.0",
+      "Weapon Slot": "1.0",
+      "Pickaxe Slot": "2.0",
+      "Axe Slot": "3.0",
+      "Gapple Slot": "4.0",
+      "Water Slot": "5.0",
+      "Bow Slot": "6.0",
+      "BowMode": "BOW",
+      "Block Slot": "7.0",
+      "Pearl Slot": "8.0"
+    }
+  },
+  "AutoMLG": {
+    "state": false,
+    "key": 0,
+    "values": {}
+  },
+  "AutoTool": {
+    "state": false,
+    "key": 89,
+    "values": {}
+  },
+  "NoFall": {
+    "state": true,
+    "key": 0,
+    "values": {
+      "FallDistance": "4.0"
+    }
+  },
+  "Scaffold": {
+    "state": false,
+    "key": 70,
+    "values": {
+      "Mode": "Normal",
+      "Counter": "Myau",
+      "KeepY-RotationDelay": "3.0",
+      "UP-RotationDelay": "2.0",
+      "KeepY-PlaceDelay": "4.0",
+      "UP-PlaceDelay": "3.0",
+      "Eagle": "true",
+      "Swing": "false",
+      "RotationMode": "Silent",
+      "SearchRange": "7.0"
+    }
+  },
+  "Stuck": {
+    "state": false,
+    "key": 86,
+    "values": {
+      "Mode": "Normal"
+    }
+  },
+  "ArrayList": {
+    "state": true,
+    "key": 0,
+    "values": {
+      "X": "4.0",
+      "Y": "40.0"
+    }
+  },
+  "TargetHUD": {
+    "state": true,
+    "key": 0,
+    "values": {}
+  },
+  "Notification": {
+    "state": false,
+    "key": 0,
+    "values": {
+      "X": "10.0",
+      "Y": "250.0"
+    }
+  }
+}
