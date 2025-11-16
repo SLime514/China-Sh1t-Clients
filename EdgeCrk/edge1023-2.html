@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module Control Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0066ff',
+                        secondary: '#00aaff',
+                        dark: '#0a1128',
+                        'dark-light': '#1a2138',
+                        'dark-lighter': '#2a3148',
+                        light: '#f0f9ff',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'qoder': '0 4px 20px rgba(0, 102, 255, 0.15)',
+                        'qoder-hover': '0 8px 30px rgba(0, 102, 255, 0.25)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .glass {
+                background: rgba(26, 33, 56, 0.7);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .glass-light {
+                background: rgba(42, 49, 72, 0.7);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.05);
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            .animate-float {
+                animation: float 6s ease-in-out infinite;
+            }
+            @keyframes float {
+                0% { transform: translateY(0px); }
+                50% { transform: translateY(-10px); }
+                100% { transform: translateY(0px); }
+            }
+            .transition-all-300 {
+                transition: all 0.3s ease;
+            }
+            .qoderButton {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 500;
+                white-space: nowrap;
+                user-select: none;
+                background-color: transparent;
+                border: 1px solid transparent;
+                border-radius: 2000px;
+                line-height: 1.5;
+                transition: all 0.3s ease;
+            }
+            .qoderButton--primary {
+                color: #fff;
+                background-color: #0066ff;
+                border-color: #0066ff;
+            }
+            .qoderButton--primary:hover {
+                background-color: #0055dd;
+                border-color: #0055dd;
+            }
+            .qoderButton--light {
+                color: #f0f9ff;
+                background-color: rgba(255, 255, 255, 0.1);
+                border-color: rgba(255, 255, 255, 0.1);
+            }
+            .qoderButton--light:hover {
+                background-color: rgba(255, 255, 255, 0.15);
+                border-color: rgba(255, 255, 255, 0.15);
+            }
+            .qoderButton--small {
+                padding: 0 12px;
+                font-size: 14px;
+                height: 32px;
+            }
+            .navItem {
+                position: relative;
+                display: inline-flex;
+                align-items: center;
+                padding: 0 16px;
+                height: 46px;
+                color: #f0f9ff;
+                font-size: 14px;
+                transition: all 0.3s ease;
+            }
+            .navItem:hover {
+                color: #00aaff;
+                background-color: rgba(0, 170, 255, 0.1);
+            }
+            .input--qoder {
+                background-color: rgba(42, 49, 72, 0.7);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 2000px;
+                padding: 0 16px;
+                height: 32px;
+                font-size: 14px;
+                color: #f0f9ff;
+                transition: all 0.3s ease;
+            }
+            .input--qoder:focus {
+                outline: none;
+                border-color: #0066ff;
+                box-shadow: 0 0 0 2px rgba(0, 102, 255, 0.2);
+            }
+            .slider--qoder {
+                -webkit-appearance: none;
+                width: 100%;
+                height: 6px;
+                border-radius: 3px;
+                background: rgba(42, 49, 72, 0.7);
+                outline: none;
+            }
+            .slider--qoder::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                appearance: none;
+                width: 16px;
+                height: 16px;
+                border-radius: 50%;
+                background: #0066ff;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            .slider--qoder::-webkit-slider-thumb:hover {
+                background: #0055dd;
+                transform: scale(1.1);
+            }
+            .toggle--qoder {
+                position: relative;
+                display: inline-block;
+                width: 44px;
+                height: 24px;
+            }
+            .toggle--qoder input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+            .toggle-slider {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba(42, 49, 72, 0.7);
+                transition: all 0.3s ease;
+                border-radius: 24px;
+            }
+            .toggle-slider:before {
+                position: absolute;
+                content: "";
+                height: 18px;
+                width: 18px;
+                left: 3px;
+                bottom: 3px;
+                background-color: white;
+                transition: all 0.3s ease;
+                border-radius: 50%;
+            }
+            input:checked + .toggle-slider {
+                background-color: #0066ff;
+            }
+            input:checked + .toggle-slider:before {
+                transform: translateX(20px);
+            }
+            .select--qoder {
+                background-color: rgba(42, 49, 72, 0.7);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 4px;
+                padding: 0 12px;
+                height: 32px;
+                font-size: 14px;
+                color: #f0f9ff;
+                appearance: none;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23f0f9ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: right 12px center;
+                padding-right: 36px;
+            }
+            .select--qoder:focus {
+                outline: none;
+                border-color: #0066ff;
+                box-shadow: 0 0 0 2px rgba(0, 102, 255, 0.2);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-dark via-dark-light to-dark-lighter min-h-screen font-sans text-light overflow-x-hidden">
+<!-- Background decoration elements -->
+<div class="fixed top-20 left-10 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-float"></div>
+<div class="fixed bottom-20 right-10 w-80 h-80 bg-secondary/10 rounded-full blur-3xl animate-float"
+     style="animation-delay: 2s"></div>
+
+<!-- Header -->
+<header class="glass sticky top-0 z-50 px-6 py-4 mb-8">
+    <div class="container mx-auto flex justify-between items-center">
+        <div class="logoWrapper--YxzJ3ld flex items-center">
+            <a href="#" rel="noopener noreferrer" target="_self">
+                <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/aa50f17385014fc8948378646ca805c4~tplv-a9rns2rl98-image.image?rcl=202510210647009E6A0B32DC49373C1F07&rk3s=8e244e95&rrcfp=f06b921b&x-expires=1763592435&x-signature=pia5oAA0eJ7GwQitDuMkPNM18ik%3D"
+                     alt="Qoder Logo" class="h-8">
+            </a>
+            <h1 class="text-[clamp(1.2rem,2vw,1.8rem)] font-bold text-shadow ml-3">Module Controller</h1>
+        </div>
+        <div class="topRightContent--QUq6nzH flex items-center gap-4">
+            <div class="relative">
+                <input type="text" id="configName" placeholder="Config name"
+                       class="input--qoder w-48">
+            </div>
+            <a href="#" id="saveConfig" rel="noopener noreferrer">
+                <button class="qoderButton qoderButton--light qoderButton--small">
+                    <span class="buttonContent--cwiDI7i">
+                        <i class="fa fa-save mr-2"></i>
+                        <span class="buttonText">Save</span>
+                    </span>
+                </button>
+            </a>
+            <a href="#" id="loadConfig" rel="noopener noreferrer">
+                <button class="qoderButton qoderButton--primary qoderButton--small">
+                    <span class="buttonContent--cwiDI7i">
+                        <i class="fa fa-folder-open mr-2"></i>
+                        <span class="buttonText">Load</span>
+                    </span>
+                </button>
+            </a>
+        </div>
+    </div>
+</header>
+
+<!-- Main content -->
+<main class="container mx-auto px-4 pb-16">
+    <div id="categories" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Categories will be inserted here by JavaScript -->
+    </div>
+</main>
+
+<!-- Modal for config selection -->
+<div id="configModal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+    <div class="glass rounded-2xl p-6 w-full max-w-md relative z-10 shadow-qoder">
+        <h3 class="text-xl font-semibold mb-4 flex items-center">
+            <i class="fa fa-folder-open mr-2 text-primary"></i>
+            Select Configuration
+        </h3>
+        <div id="configList" class="max-h-60 overflow-y-auto space-y-2 mb-4">
+            <!-- Config options will be inserted here -->
+        </div>
+        <div class="flex justify-end gap-3">
+            <button id="closeModal" class="qoderButton qoderButton--light qoderButton--small">
+                <span class="buttonText">Cancel</span>
+            </button>
+            <button id="confirmLoad" class="qoderButton qoderButton--primary qoderButton--small">
+                <span class="buttonText">Load</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // API Endpoints
+    const API_BASE = ''; // Assuming frontend is served from the same origin as backend
+    const API_ENDPOINTS = {
+        overview: `${API_BASE}/overview`,
+        toggle: `${API_BASE}/toggle`,
+        update: `${API_BASE}/update`,
+        bind: `${API_BASE}/bind`,
+        save: `${API_BASE}/save`,
+        load: `${API_BASE}/load`,
+        list: `${API_BASE}/list`
+    };
+
+    // Selected config for loading
+    let selectedConfig = null;
+
+    // Fetch and render all categories and modules
+    async function loadData() {
+        try {
+            const response = await fetch(API_ENDPOINTS.overview);
+            const categories = await response.json();
+            renderCategories(categories);
+        } catch (error) {
+            console.error('Error loading data:', error);
+        }
+    }
+
+    // Render categories and their modules
+    function renderCategories(categories) {
+        const categoriesContainer = document.getElementById('categories');
+        categoriesContainer.innerHTML = '';
+
+        categories.forEach(category => {
+            const categoryCard = document.createElement('div');
+            categoryCard.className = 'glass rounded-2xl p-5 hover:shadow-qoder-hover transition-all duration-300';
+
+            categoryCard.innerHTML = `
+                <h2 class="text-xl font-bold mb-4 pb-2 border-b border-white/10 flex items-center">
+                    <i class="fa fa-folder-open mr-2 text-primary"></i>${category.name}
+                </h2>
+                <div class="space-y-4">
+                    ${category.modules.map(module => renderModule(module)).join('')}
+                </div>
+            `;
+
+            categoriesContainer.appendChild(categoryCard);
+        });
+    }
+
+    // Render individual module
+    function renderModule(module) {
+        return `
+            <div class="glass-light rounded-xl p-4 transition-all duration-300 hover:translate-y-[-5px] hover:shadow-qoder">
+                <div class="flex justify-between items-center mb-3">
+                    <h3 class="font-semibold">${module.name}</h3>
+                    <label class="toggle--qoder">
+                        <input type="checkbox" class="module-toggle"
+                               data-module="${module.name}" ${module.enable ? 'checked' : ''}>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="space-y-3 text-sm">
+                    <!-- Key Binding -->
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-300"><i class="fa fa-key mr-1"></i> Key Bind</span>
+                        <div class="flex items-center gap-2">
+                            <input type="text" class="key-bind input--qoder w-16 text-center py-1 px-2"
+                                   data-module="${module.name}" value="${module.keyName || ''}">
+                            <button class="set-key-btn qoderButton qoderButton--light qoderButton--small h-8 w-8 p-0"
+                                    data-module="${module.name}">
+                                <i class="fa fa-refresh"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Values -->
+                    ${module.values.map(value => renderValue(module.name, value)).join('')}
+                </div>
+            </div>
+        `;
+    }
+
+    // Render individual value based on type
+    function renderValue(moduleName, value) {
+        switch (value.type) {
+            case 'boolean':
+                return `
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-300">${value.name}</span>
+                        <label class="toggle--qoder">
+                            <input type="checkbox" class="value-toggle"
+                                   data-module="${moduleName}" data-value="${value.name}"
+                                   ${value.enable ? 'checked' : ''}>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                `;
+
+            case 'number':
+                return `
+                    <div class="space-y-1">
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">${value.name}</span>
+                            <span class="text-sm glass px-2 py-0.5 rounded">${value.numberValue.toFixed(1)}</span>
+                        </div>
+                        <input type="range" class="value-slider slider--qoder"
+                               data-module="${moduleName}" data-value="${value.name}"
+                               min="${value.min}" max="${value.max}" step="0.1"
+                               value="${value.numberValue}">
+                    </div>
+                `;
+
+            case 'modes':
+                return `
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-300">${value.name}</span>
+                        <select class="value-mode select--qoder"
+                                data-module="${moduleName}" data-value="${value.name}">
+                            ${value.modes.map(mode => `
+                                <option value="${mode}" ${value.currentMode === mode ? 'selected' : ''}>${mode}</option>
+                            `).join('')}
+                        </select>
+                    </div>
+                `;
+
+            default:
+                return `<div class="text-gray-400">${value.name}: Unsupported type</div>`;
+        }
+    }
+
+    // Fetch config list for load modal
+    async function loadConfigList() {
+        try {
+            const response = await fetch(API_ENDPOINTS.list);
+            const configs = await response.json();
+            renderConfigList(configs);
+        } catch (error) {
+            console.error('Error loading config list:', error);
+        }
+    }
+
+    // Render config list in modal
+    function renderConfigList(configs) {
+        const configListContainer = document.getElementById('configList');
+        configListContainer.innerHTML = '';
+
+        if (configs.length === 0) {
+            configListContainer.innerHTML = '<p class="text-gray-400 text-center py-2">No configurations found</p>';
+            return;
+        }
+
+        configs.forEach(config => {
+            const configItem = document.createElement('div');
+            configItem.className = 'config-item glass rounded-lg px-3 py-2 hover:bg-primary/20 transition-all cursor-pointer';
+            configItem.textContent = config;
+            configItem.dataset.config = config;
+
+            configItem.addEventListener('click', () => {
+                // Remove active class from all items
+                document.querySelectorAll('.config-item').forEach(item => {
+                    item.classList.remove('bg-primary/30');
+                });
+                // Add active class to clicked item
+                configItem.classList.add('bg-primary/30');
+                selectedConfig = config;
+            });
+
+            configListContainer.appendChild(configItem);
+        });
+    }
+
+    // Event Listeners
+    document.addEventListener('DOMContentLoaded', () => {
+        // Load initial data
+        loadData();
+
+        // Module toggle
+        document.addEventListener('change', async (e) => {
+            if (e.target.classList.contains('module-toggle')) {
+                const moduleName = e.target.dataset.module;
+                const enable = e.target.checked;
+
+                await fetch(API_ENDPOINTS.toggle, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ module: moduleName, enable })
+                });
+            }
+        });
+
+        // Value toggle (boolean)
+        document.addEventListener('change', async (e) => {
+            if (e.target.classList.contains('value-toggle')) {
+                const moduleName = e.target.dataset.module;
+                const valueName = e.target.dataset.value;
+                const newValue = e.target.checked;
+
+                await fetch(API_ENDPOINTS.update, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        module: moduleName,
+                        value: valueName,
+                        new: newValue
+                    })
+                });
+            }
+        });
+
+        // Value slider (number)
+        document.addEventListener('input', async (e) => {
+            if (e.target.classList.contains('value-slider')) {
+                const moduleName = e.target.dataset.module;
+                const valueName = e.target.dataset.value;
+                const newValue = parseFloat(e.target.value);
+
+                // Update display value
+                e.target.parentElement.querySelector('span:last-child').textContent = newValue.toFixed(1);
+
+                await fetch(API_ENDPOINTS.update, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        module: moduleName,
+                        value: valueName,
+                        new: newValue
+                    })
+                });
+            }
+        });
+
+        // Mode selection
+        document.addEventListener('change', async (e) => {
+            if (e.target.classList.contains('value-mode')) {
+                const moduleName = e.target.dataset.module;
+                const valueName = e.target.dataset.value;
+                const newValue = e.target.value;
+
+                await fetch(API_ENDPOINTS.update, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        module: moduleName,
+                        value: valueName,
+                        new: newValue
+                    })
+                });
+            }
+        });
+
+        // Key binding
+        document.addEventListener('click', async (e) => {
+            if (e.target.closest('.set-key-btn')) {
+                const btn = e.target.closest('.set-key-btn');
+                const moduleName = btn.dataset.module;
+                const input = btn.parentElement.querySelector('.key-bind');
+
+                input.value = 'Press key...';
+                input.disabled = true;
+                btn.disabled = true;
+
+                const keyHandler = async (keyEvent) => {
+                    const key = keyEvent.key.toUpperCase();
+                    input.value = key == 'ESCAPE' ? "None" : key;
+
+                    await fetch(API_ENDPOINTS.bind, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            module: moduleName,
+                            key: key == 'ESCAPE' ? "None" : key
+                        })
+                    });
+
+                    // Cleanup
+                    input.disabled = false;
+                    btn.disabled = false;
+                    document.removeEventListener('keydown', keyHandler);
+                };
+
+                document.addEventListener('keydown', keyHandler);
+            }
+        });
+
+        // Save config
+        document.getElementById('saveConfig').addEventListener('click', async () => {
+            const configName = document.getElementById('configName').value.trim();
+            if (!configName) {
+                alert('Please enter a config name');
+                return;
+            }
+
+            await fetch(API_ENDPOINTS.save, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: configName })
+            });
+
+            // Show feedback
+            const saveBtn = document.getElementById('saveConfig');
+            const originalText = saveBtn.innerHTML;
+            saveBtn.innerHTML = '<i class="fa fa-check mr-2"></i>Saved!';
+            setTimeout(() => {
+                saveBtn.innerHTML = originalText;
+            }, 2000);
+        });
+
+        // Load config modal
+        document.getElementById('loadConfig').addEventListener('click', () => {
+            loadConfigList();
+            document.getElementById('configModal').classList.remove('hidden');
+            selectedConfig = null;
+        });
+
+        // Close modal
+        document.getElementById('closeModal').addEventListener('click', () => {
+            document.getElementById('configModal').classList.add('hidden');
+        });
+
+        // Confirm load config
+        document.getElementById('confirmLoad').addEventListener('click', async () => {
+            if (!selectedConfig) {
+                alert('Please select a configuration');
+                return;
+            }
+
+            await fetch(API_ENDPOINTS.load, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: selectedConfig })
+            });
+
+            // Refresh data
+            loadData();
+            document.getElementById('configModal').classList.add('hidden');
+        });
+    });
+</script>
+</body>
+
+</html>
